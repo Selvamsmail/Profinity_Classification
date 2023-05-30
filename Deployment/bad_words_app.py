@@ -23,6 +23,7 @@ nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+import re
 
 os.makedirs('content', exist_ok=True)
 os.chdir('content')
@@ -72,7 +73,7 @@ def badword_prediction(input_data):
     df = df.append(new_row, ignore_index=True)
     
     df['text'] = [str(i).lower() for i in df['text']]
-    df['text'] = df['text'].str.replace("[^a-zA-Z0-9]", " ") 
+    df['text'] = df['text'].apply(lambda x: re.sub(r'[^a-zA-Z0-9]', ' ', x))
     
     df['text'] = df['text'].apply(lambda x: lemmatize_sentence(x))
     
