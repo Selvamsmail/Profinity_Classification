@@ -88,6 +88,7 @@ def badword_prediction(input_data):
 
     predictions = model.predict(padded_sequence)[0][0]
     threshold = 0.5
+    predictions = np.exp(raw_prob) / (np.exp(raw_prob) + 1)
     confidence = predictions
     predictions = ('it is a Bad word with a confidence of '+str(predictions)+' %' if predictions >= threshold else 'it is not a Bad word' )
        
