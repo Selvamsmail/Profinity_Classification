@@ -91,7 +91,7 @@ def badword_prediction(input_data):
     confidence = predictions
     predictions = ['it is a Bad word with a confidence of '+str(predictions)+' %' if predictions >= threshold else 'it is not a Bad word' ]
        
-    return(predictions)
+    return(*predictions)
 
 def main():
     # titel
