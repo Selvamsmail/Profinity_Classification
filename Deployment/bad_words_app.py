@@ -31,11 +31,11 @@ gdown.download(id = '1qFViB4VmxIrC_atqunNzq9pqUaz0YMk0')
 gdown.download(id = '1YGzqZhxig_5szsufoDXYJdRiAvxKtz1F')
 
 # Load the tokenizer
-with open('C:/Users/PM/.spyder-py3/content/tokenizer.pickle', 'rb') as handle:
+with open('/app/profinity_classification/content/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 # Load the trained model
-model = load_model('C:/Users/PM/.spyder-py3/content/model.h5')
+model = load_model('/app/profinity_classification/content/model.h5')
 
 
 lemmatizer = WordNetLemmatizer()
@@ -88,7 +88,8 @@ def badword_prediction(input_data):
 
     predictions = model.predict(padded_sequence)[0][0]
     threshold = 0.5
-    predictions = ['it is a Bad word' if predictions >= threshold else 'it is not a Bad word' ]
+    confidence = predictions
+    predictions = ['it is a Bad word with a confidence of'+str(predictions)+'%' if predictions >= threshold else 'it is not a Bad word' ]
        
     return(predictions)
 
