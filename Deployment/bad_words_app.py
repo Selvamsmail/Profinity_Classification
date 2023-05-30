@@ -23,7 +23,6 @@ nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import pipreqs
 
 directory_path = 'C:/Users/PM/Desktop/'
 pipreqs.generate_requirements_file(directory_path)
