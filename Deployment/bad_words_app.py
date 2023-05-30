@@ -24,9 +24,6 @@ nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-directory_path = 'C:/Users/PM/Desktop/'
-pipreqs.generate_requirements_file(directory_path)
-
 os.makedirs('content', exist_ok=True)
 os.chdir('content')
 
