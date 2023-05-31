@@ -3,7 +3,7 @@
 
 Please find the link to the app...
 
-"https://selvamsmail-profinity-classifica-deploymentbad-words-app-8zho9d.streamlit.app/"
+"[Link to the application](https://selvamsmail-profinity-classifica-deploymentbad-words-app-01wwwf.streamlit.app/)"
 
 # Data sources:
 
