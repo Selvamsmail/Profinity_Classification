@@ -41,9 +41,9 @@ def getdata():
   gdown.download(id = '1qFViB4VmxIrC_atqunNzq9pqUaz0YMk0')
   gdown.download(id = '1YGzqZhxig_5szsufoDXYJdRiAvxKtz1F')
   
-  with open('/content/content/tokenizer.pickle', 'rb') as handle:
+  with open('/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
-  model = load_model('/content/content/model.h5')
+  model = load_model('/model.h5')
   
   return tokenizer, model
 
