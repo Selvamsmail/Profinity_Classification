@@ -117,7 +117,7 @@ def badword_prediction(input_data):
     return(predictions)
 
 def main():
-
+    a = collect()
     theme = {
         'base': 'dark',
         'backgroundColor': '#005C1D',
