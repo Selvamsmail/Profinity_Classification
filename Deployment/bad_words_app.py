@@ -1,3 +1,4 @@
+
 import streamlit as st
 import gdown
 import pickle
@@ -16,28 +17,56 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-nltk.download('stopwords')
-stop_words = stopwords.words('english')
-nltk.download('omw-1.4')
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('averaged_perceptron_tagger')
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.models import load_model
 import re
 
 os.makedirs('content', exist_ok=True)
 os.chdir('content')
 
-gdown.download(id = '1qFViB4VmxIrC_atqunNzq9pqUaz0YMk0')
-gdown.download(id = '1YGzqZhxig_5szsufoDXYJdRiAvxKtz1F')
+@st.cache_data
+def collect():
+  nltk.download('stopwords')
+  stop_words = stopwords.words('english')
+  nltk.download('omw-1.4')
+  nltk.download('punkt')
+  nltk.download('wordnet')
+  nltk.download('averaged_perceptron_tagger')
+  gdown.download(id = '1zajG3hnHRbzRPO7Sv_pJC5fsfiipMUk0')
+  return imagepath
 
-# Load the tokenizer
-with open('/app/profinity_classification/content/tokenizer.pickle', 'rb') as handle:
+@st.cache_resource
+def getdata():
+
+  gdown.download(id = '1qFViB4VmxIrC_atqunNzq9pqUaz0YMk0')
+  gdown.download(id = '1YGzqZhxig_5szsufoDXYJdRiAvxKtz1F')
+  
+  with open('/content/content/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
+  model = load_model('/content/content/model.h5')
+  
+  return tokenizer, model
 
-# Load the trained model
-model = load_model('/app/profinity_classification/content/model.h5')
+def set_background(theme):
 
+    encoded_image = 0
+    
+    page_bg_css = f'''
+        <style>
+            body {{
+                background-image: url("data:image/jpeg;base64,{encoded_image}");
+                background-size: cover;
+            }}
+
+            .stApp {{
+                color: {theme['textColor']};
+                background-color: {theme['backgroundColor']};
+            }}
+        </style>
+    '''
+    st.markdown(page_bg_css, unsafe_allow_html=True)
+
+tokenizer, model = getdata()
 
 lemmatizer = WordNetLemmatizer()
 
@@ -56,21 +85,15 @@ def lemmatize_sentence(sentence):
           except:
             lemmatized_sentence.append(word)
 
-    return " ".join(lemmatized_sentence)
-
-
-def remove_stopwords(rev):
-
-    review_tokenized = word_tokenize(rev)
-    rev_new = " ".join([i for i in review_tokenized  if i not in stop_words])
-    return rev_new
+    return " ".join(lemmatized_sentence) 
 
 
 def badword_prediction(input_data):
      
     df = pd.DataFrame(columns = ['text'])
     new_row= {'text': input_data}
-    df = df.append(new_row, ignore_index=True)
+    new_row = pd.DataFrame(new_row, index=[0])
+    df = pd.concat([df, new_row], ignore_index=True)
     
     df['text'] = [str(i).lower() for i in df['text']]
     df['text'] = df['text'].apply(lambda x: re.sub(r'[^a-zA-Z0-9]', ' ', x))
@@ -94,21 +117,35 @@ def badword_prediction(input_data):
     return(predictions)
 
 def main():
-    # titel
-    st.title('Profanity Checker')
-    
+
+    theme = {
+        'base': 'dark',
+        'backgroundColor': '#005C1D',
+        'textColor': '#ffffff'
+    }
+
+    set_background(theme)
+
+    st.write('Welcome to the, *Profanity Checker Application* :sunglasses:')
+    st.title('Check your sentence')
+    st.text('To get better results try typing words with atleast a length of 7')
     # input
     text = st.text_input('Enter your text:')
     
     # prediction
-    diagnosis = ""
+    ans = ""
     
     # button
-    if st.button('Result'):
-        diagnosis = badword_prediction(text)
+    if st.button('Check'):
+        ans = badword_prediction(text)
         
-    st.success(diagnosis)
+    st.success(ans)
     
+    link = st.expander('*Project Link!* :point_down:', expanded=False)
+    
+    with link:
+        st.markdown('Visit my project in this [link](https://github.com/Selvamsmail/Profinity_Classification)')
+
+
 if __name__ == '__main__':
     main()
-    
