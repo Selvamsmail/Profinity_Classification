@@ -77,8 +77,6 @@ def badword_prediction(input_data):
     
     df['text'] = df['text'].apply(lambda x: lemmatize_sentence(x))
     
-    df['text'] = [remove_stopwords(r) for r in df['text']]
-    
     texts = df['text'].to_list()
 
     tokenizer.fit_on_texts(texts)
