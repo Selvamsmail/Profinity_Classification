@@ -32,8 +32,7 @@ def collect():
   nltk.download('punkt')
   nltk.download('wordnet')
   nltk.download('averaged_perceptron_tagger')
-  gdown.download(id = '1zajG3hnHRbzRPO7Sv_pJC5fsfiipMUk0')
-  return imagepath
+  return
 
 @st.cache_resource
 def getdata():
