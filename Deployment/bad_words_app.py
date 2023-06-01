@@ -135,7 +135,8 @@ def main():
         ans = badword_prediction(text)
         
     st.success(ans)
-    st.text('Another point is multiple checks do not change the confidence level when the model is sure')
+    st.text('Another point is multiple checks do not change')
+    st.text('the confidence level when the model is sure')
     st.write('soon an updated model will have regulations like *random_perturbations, data_rotation function, noise_injection* :muscle:')
     link = st.expander('*Project Link!* :point_down:', expanded=False)
     
