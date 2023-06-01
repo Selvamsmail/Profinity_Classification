@@ -3,7 +3,6 @@ import streamlit as st
 import gdown
 import pickle
 import tensorflow as tf
-import os
 from keras.models import load_model
 import pandas as pd
 import numpy as np
@@ -21,9 +20,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 import re
 
-os.makedirs('content', exist_ok=True)
-os.chdir('content')
-
 @st.cache_data
 def collect():
   nltk.download('stopwords')
@@ -40,9 +36,9 @@ def getdata():
   gdown.download(id = '1qFViB4VmxIrC_atqunNzq9pqUaz0YMk0')
   gdown.download(id = '1YGzqZhxig_5szsufoDXYJdRiAvxKtz1F')
   
-  with open('/app/profinity_classification/content/tokenizer.pickle', 'rb') as handle:
+  with open('/app/profinity_classification/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
-  model = load_model('/app/profinity_classification/content/model.h5')
+  model = load_model('/app/profinity_classification/model.h5')
   
   return tokenizer, model
 
